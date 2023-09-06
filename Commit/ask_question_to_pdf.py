@@ -113,4 +113,6 @@ def ask_question_to_pdf(prompt) :
 
     return response
 
+
+quest=""
 # print (ask_question_to_pdf("quels sont les avantages des voitures électriques ?"))
