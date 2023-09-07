@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Mon A.I.de mémoire</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <button class="button" id="top-left-button" ><label>Uploader de nouveaux fichiers</label></button>
+    <main class="main-container">
+      <header class="header">
+        <h1 class="header-title">Mon A.I.de mémoire</h1>
+      </header>
+
+      <section id="messages-container" class="messages-container">
+        <div class="message message-ai">
+          Je suis ton AIssistant de cours personnel ! Pose-moi une question sur
+          le cours et je te répondrai.
+        </div>
+      </section>
+
+      <form id="prompt-form" class="prompt-container">
+        <label for="prompt" class="prompt-label">Message</label>
+
+        <input
+          type="text"
+          id="prompt"
+          name="prompt"
+          class="prompt-input"
+          autocomplete="off"
+        />
+
+        <button type="submit" class="button" id="submit-button"><label>Envoyer</label></button>
+        <button type="button" id="theme-toggle" class="button"><label>Dark Mode</label></button>
+        <button type="button" class="button" id="question-button">
+        <label>Pose-moi une question !</label>
+        </button>
+      </form>
+
+      <script src="{{ url_for('static', filename='prompt.js') }}"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Données à envoyer dans la requête POST (si nécessaire)
+            const data = {};
+
+            // Options de la requête POST
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data) // Convertit les données en JSON
+            };
+
+            // URL de la page à laquelle vous souhaitez envoyer la requête POST
+            const url = "/historic"; // Remplacez par l'URL de votre page
+
+            // Envoi de la requête POST
+            fetch(url, options)
+                .then(response => response.json()) // Convertit la réponse en JSON
+                .then(data => {
+                    // Traitement des données JSON ici
+                    console.log(data.historic);
+                    data.historic.forEach(element => {
+                      if(element[1] == 1){
+                        appendAIMessage2(element[0]);
+                      }
+                      else{
+                        appendHumanMessage(element[0]);
+                      }
+                    });
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la requête POST :", error);
+                });
+        });
+    </script>
+    <script>
+    const toggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Check if a theme preference is stored in local storage
+    if (localStorage.getItem('theme') === 'dark') {
+        applyDarkTheme();
+    }
+
+    toggleButton.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+            applyLightTheme();
+            localStorage.setItem('theme', 'light');
+        } else {
+            applyDarkTheme();
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+
+
+    function applyDarkTheme() {
+        body.classList.add('dark-mode');
+
+        // Set custom properties for dark theme
+        document.documentElement.style.setProperty('--body-background-color', 'var(--dark-body-background-color)');
+        document.documentElement.style.setProperty('--main-background-color', 'var(--dark-main-background-color)');
+        document.documentElement.style.setProperty('--main-color', 'var(--dark-main-color)');
+        document.documentElement.style.setProperty('--border-color', 'var(--dark-border-color)');
+        document.documentElement.style.setProperty('--secondary-color', 'var(--dark-secondary-color)');
+
+    }
+
+    function applyLightTheme() {
+        body.classList.remove('dark-mode');
+
+        // Set custom properties for light theme
+        document.documentElement.style.setProperty('--body-background-color', 'var(--light-body-background-color)');
+        document.documentElement.style.setProperty('--main-background-color', 'var(--light-main-background-color)');
+        document.documentElement.style.setProperty('--main-color', 'var(--light-main-color)');
+        document.documentElement.style.setProperty('--border-color', 'var(--light-border-color)');
+        document.documentElement.style.setProperty('--secondary-color', 'var(--light-secondary-color)');
+
+    }
+
+    const button = document.getElementById('top-left-button');
+
+    // Add a click event listener to the button
+    button.addEventListener('click', function() {
+        // Redirect to the desired webpage
+        window.location.href = '/new_file.html'; // Replace with the URL you want to redirect to
+    });
+    </script>
+    </main>
+  </body>
+</html>
