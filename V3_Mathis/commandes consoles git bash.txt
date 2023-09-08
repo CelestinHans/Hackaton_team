@@ -8,6 +8,8 @@ python ask_question_to_pdf.py
 
 
 
+
+*pip install flask_session
 *cat name_file: voir l interieur d un fichier
 *ls: liste des fichiers
 *pip install flask
