@@ -1,0 +1,22 @@
+cd "C:\\Users\\cmmcc\\Desktop\\Tp1et2"
+python3 -m venv .venv
+source .venv/Scripts/activate
+pip install -r requirements.txt
+python -m nltk.downloader all
+flask --app main run --debug
+python ask_question_to_pdf.py
+
+
+
+
+*pip install flask_session
+*cat name_file: voir l interieur d un fichier
+*ls: liste des fichiers
+*pip install flask
+*pip install openai
+*cp .env.example .env
+*cp: copie les variables d environnements de .env.example .env
+pip install -r requirements.txt
+python -m nltk.downloader all
+*python ask_question_to_pdf.py  #lance le fichier sous python
+*si pas d effet flask run: supprimer .venv et relancer
